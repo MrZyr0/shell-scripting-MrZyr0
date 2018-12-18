@@ -1,86 +1,46 @@
 #!/bin/bash
+clear
 
-if [ $* | grep ^/$/ ] == ""
+echo "## ULTIMATE CLEANER SCRIPT ##"
+
+echo "[0] Récupération des paramètres..."
+if [ -d $1 ]
 then
-    WORKING_DIR=`dirname $0`
-else
-    $* | grep ^/$/ > WORKING_DIR
-fi
-# Il faut que je créer un dossier CLEAN à coté du WORKING_DIR
-CLEAN_DIR=../$WORKING_DIR
-
-
-if [[ $* | grep fixtureload ]]
-then
-    echo "[0] Création des fixture"
-
-    rm -rf ./fixtures
-
-    mkdir -p \
-        ./fixtures/root\
-        ./fixtures/home/1\
-        ./fixtures/home/.git\/logs\
-        ./fixtures/home/home_du_grenier\
-        ./fixtures/home/homework/documentaires
-
-    echo "aaaa"     													                                                    > ./fixtures/home/aaaaa
-    echo "/fixtures/root/aaaa"
-    echo "bbbb"     													                                                    > ./fixtures/root/bbbbb
-    echo "/fixtures/root/bbbbb"
-    echo "zzzz"     													                                                    > ./fixtures/root/zzzzz
-    echo "/fixtures/root/zzzzz"
-    echo "aaaa"     													                                                    > ./fixtures/home/aaaaa
-    echo "/fixtures/home/aaaa"
-    echo "bbbb"     													                                                    > ./fixtures/home/bbbbb
-    echo "/fixtures/home/bbbbb"
-    echo "zzzz"     													                                                    > ./fixtures/home/zzzzz
-    echo "/fixtures/home/zzzzz"
-    echo "eeee"     													                                                    > ./fixtures/home/eeeeee
-    echo "/fixtures/home/eeeeee"
-    echo "coincoin"     													                                                > ./fixtures/home/1/duck.jpg
-    echo "/fixtures/home/1/duck.jpg"
-    echo "FATAL ERROR T NUL" 												                                                > ./fixtures/home/.git/logs/erros.tnul
-    echo "/fixtures/home/.git/logs/erros.tnul"
-    echo "OK" 														                                                        > ./fixtures/home/.git/logs/success.gg
-    echo "/fixtures/home/.git/logs/success.gg"
-    echo "GG WP I THINK" 													                                                > ./fixtures/home/.git/logs/win.arretedejouer
-    echo "/fixtures/home/.git/logs/win.arretedejouer"
-    echo "." 														                                                        > ./fixtures/home/.git/logs/default.jecpas
-    echo "/fixtures/home/.git/logs/default.jecpas"
-    echo "ILLUMINATI" 													                                                    > ./fixtures/home/home_du_grenier\plan_des_capitalistes.pdf
-    echo "/fixtures/home/home_du_grenier\plan_des_capitalistes.pdf"
-    echo "title : fukcing super smash brothers utlimated for my fucking awesome goodness amzing NINTENDO GOD switch :D"     > ./fixtures/home/homework/game.cshrap
-    echo "/fixtures/home/homework/game.cshrap"
-    echo "give me more RAM !" 					    							                                            > ./fixtures/home/homework/unity.exe
-    echo "/fixtures/home/homework/unity.exe"
-    echo "elp.tentacode.net" 					    							                                            > ./fixtures/home/homework/PHPwebsite
-    echo "/fixtures/home/homework/PHPwebsite"
-    echo "tada !" 							    							                                                > ./fixtures/home/homework/presentation
-    echo "/fixtures/home/homework/presentation"
-    echo "this is windobe" 						    							                                            > ./fixtures/home/homework/windows.del
-    echo "/fixtures/home/homework/windows.del"
-    echo "yeah take my money ;-)" 					    							                                        > ./fixtures/home/homework/macos.run
-    echo "/fixtures/home/homework/macos.run"
-    echo "interdit aux -18 !" 					    							                                            > ./fixtures/home/homework/documentaires/belle_blonde_chez_les_7_nains.mov
-    echo "/fixtures/home/homework/documentaires/belle_blonde_chez_les_7_nains.mov"
-    echo "tj là ?" 							    							                                                > ./fixtures/home/homework/documentaires/BOOBSWATCH.mp4
-    echo "/fixtures/home/homework/documentaires/BOOBSWATCH.mp4"
-    echo "tu ne devrai pas regarder ça !" 				    							                                    > ./fixtures/home/homework/documentaires/Tout_a_declarer(4K).mkv
-    echo "/fixtures/home/homework/documentaires/Tout_a_declarer(4K).mkv"
-    echo "bon tant pis je t'aurais prévenu..." 										                                        > ./fixtures/home/homework/documentaires/AlertaMalyBoules.avi
-    echo "/fixtures/home/homework/documentaires/AlertaMalyBoules.avi"
-
+    WORKING_DIR=$1
 fi
 
+CLEAN_DIR="$WORKING_DIR/../CLEAN"
 
-echo "[1] Trie en cours..."
-files = file -f
+
+echo "[1] Création du dossier de destination..."
+
+rm -rf $CLEAN_DIR
+mkdir -p $CLEAN_DIR/Photos
+mkdir -p $CLEAN_DIR/Vidéos
+mkdir -p $CLEAN_DIR/Documents
+mkdir -p $CLEAN_DIR/Audio
+mkdir -p $CLEAN_DIR/Inclassables
+
+echo "[2] Récupération des fichiers..."
+FILES=`find $WORKING_DIR -type f`
+
+echo "[3] Trie en cours..."
 for file in $files
 do
-    if [ file | grep 'image data' ] != ""
+    if [ file | grep 'image data' == 0 ]
     then
-        # copier le fichier vers un sous dossier du clean dir
+        cp file $CLEAN_DIR/Photos
+    elif [ file | grep 'PDF' == 0 ]
+    then
+        cp file $CLEAN_DIR/Documents
+    elif [ file | grep 'MPEG' == 0 ]
+    then
+        cp file $CLEAN_DIR/Audio
+    elif [ file | grep 'AVI' == 0 ] || [ file | grep 'XviD' == 0]
+    then
+        cp file $CLEAN_DIR/Vidéo
+    else
+        cp file $CLEAN_DIR/Inclassables
     fi
-
 done
-echo "FIN"
+echo "[FIN] Tri terminé"

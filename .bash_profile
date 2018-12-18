@@ -16,20 +16,14 @@ COLOR_OFF="\[\033[0m\]"     # off
 function prompt_error_code
 {
 	local ERROR=$?
-	if [ $ERROR -ne 0 ]
+	if [ $ERROR != 0 ]
 	then
-		echo "($ERROR) "
-	fi
-}
-
-
-function prompt_path
-{
-	if [ $HOME = `pwd` ]
-	then
-		echo '~'
-	else
-		basename `pwd`
+		if [ $ERROR == 130 ]
+		then
+			echo "($ERROR : STOP by user) "
+		else
+			echo "($ERROR) "
+		fi
 	fi
 }
 
@@ -57,15 +51,19 @@ function prompt_git_branch
 
 function ls_custom
 {
-	LSOUT=`ls -lahF`
-	for item in LSOUT
+	lsOut=`ls -GFlah`
+	
+	for item in $lsOut
 	do
-		if [item | grep ^.]
-		then
-			echo -e "\e[37m$item"
-		else
-			echo $item
-		fi
+		echo "a"
+		#grepOut=`$item | grep ^.`
+		
+		#if [ $grepOut != "" ]
+		#then
+		#	echo -e "\e[37m$item"
+		#else
+		#	echo $item
+		#fi
 	done
 }
 
@@ -74,13 +72,17 @@ function ls_custom
 #export PATH=/chemin:$PATH
 
 # ALIAS
+alias lsc='$(ls_custom)'
+
+ ## CD
 alias cdy='cd /mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/'
+alias cdw='cd /mnt/c/Users/Julien/'
+
 
 # TERMINAL THEME
 export CLICOLOR=1
 export LSCOLORS=XXXCXXXXBXX
-alias lsc='ls -lahF'
 
 #PS1
-export PS1="$RED\$(prompt_error_code)\033[1;36m\u: [\033[01;32m]\W[\033[0m]$$YELLOW\$(prompt_git_branch)$COLOR_OFF\$"
+export PS1="$RED\$(prompt_error_code)$CYAN\\u $GREEN\\W$YELLOW\$(prompt_git_branch)$COLOR_OFF\$ "
 

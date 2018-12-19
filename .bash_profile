@@ -16,13 +16,16 @@ COLOR_OFF="\[\033[0m\]"     # off
 function prompt_error_code
 {
 	local ERROR=$?
-	if [ $ERROR != 0 ]
+	
+	if [ $ERROR == 0 ]
 	then
+		echo "$GREEN(OK)"
+	else
 		if [ $ERROR == 130 ]
 		then
-			echo "($ERROR : STOP by user) "
+			echo "$RED\($ERROR : STOP by user)"
 		else
-			echo "($ERROR) "
+			echo "$RED\($ERROR)"
 		fi
 	fi
 }
@@ -68,6 +71,22 @@ function ls_custom
 }
 
 
+function cp_to_desktop
+{
+	if [ $# != 0 ] && [ $1 != "" ] && [ -f $1 ]
+	then
+		$file2copy=$1
+	else
+		echo "\[\033[0;31m\]Aucun arguments ! Il me faut le fichier à copier !\[\033[0m\]"
+		exit 1
+	fi
+
+	# Récupérer le chemin où l'utilisateur veux qu'on copie
+	# si c'est égal à d le chemin doit être /mnt/c/Users/Julien/Desktop
+
+	exit 0
+}
+
 # PATH
 #export PATH=/chemin:$PATH
 
@@ -78,11 +97,10 @@ alias lsc='$(ls_custom)'
 alias cdy='cd /mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/'
 alias cdw='cd /mnt/c/Users/Julien/'
 
-
 # TERMINAL THEME
 export CLICOLOR=1
 export LSCOLORS=XXXCXXXXBXX
 
 #PS1
-export PS1="$RED\$(prompt_error_code)$CYAN\\u $GREEN\\W$YELLOW\$(prompt_git_branch)$COLOR_OFF\$ "
+export PS1="$(prompt_error_code) $CYAN\\u $GREEN\\W$YELLOW\$(prompt_git_branch)$COLOR_OFF\$ "
 

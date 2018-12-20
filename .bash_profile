@@ -100,9 +100,9 @@ function prompt_error
 
     if [ $exitCode = 0 ]
     then
-        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $GREEN$exitCode$COLOR_OFF"
+        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $GREEN$exitCode$COLOR_OFF 😁👍"
     else
-        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF"
+        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF 😱😡😭"
     fi
 }
 

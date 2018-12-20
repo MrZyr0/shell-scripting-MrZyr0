@@ -1,32 +1,43 @@
+# About colors & formating https://bit.ly/2MONcNt
+# FORMATING DEFINITION
+BOLD="\e[1m"
+DIM="\e[2m"
+UNDERLINE="\e[4m"
+BLINK="\e[5m"
+INVERTED="\e[7m"
+HIDDEN="\e[8m"
+RESET="\e[0m"           # Clear formating, return to default
+
 # COLORS DEFINITION
-BLACK="\[\033[0;30m\]"      # black
-RED="\[\033[0;31m\]"        # red
-GREEN="\[\033[0;32m\]"      # green
-YELLOW="\[\033[0;33m\]"     # yellow
-BLUE="\[\033[0;34m\]"       # blue
-MAGENTA="\[\033[0;35m\]"    # magenta
-CYAN="\[\033[0;36m\]"       # cyan
-LIGHT_GREY="\[\033[0;37m\]" # light grey
-DARK_GREY="\[\033[1;30m\]"  # dark grey
-WHITE="\[\033[1;37m\]"      # white
-COLOR_OFF="\[\033[0m\]"     # off
+BLACK="\e[30m"          # black
+RED="\e[31m"            # red
+PINK="\e[91m"           # pink (actually light_red)
+GREEN="\e[92m"          # green (actually light_green)
+DARK_GREEN="\e[32m"     # green
+YELLOW="\e[33m"         # yellow
+LIGHT_YELLOW="\e[93m"   # light_yellow
+BLUE="\e[94m"           # blue
+DARK_BLUE="\e[34m"      # blue (actually dark_blue)
+MAGENTA="\e[95m"        # magenta (actually light_magenta)
+DARK_MAGENTA="\e[35m"   # magenta
+CYAN="\e[96m"           # cyan (actually light_cyan)
+DARK_CYAN="\e[36m"      # cyan
+LIGHT_GREY="\e[37m"     # light grey
+DARK_GREY="\e[90m"      # dark grey
+WHITE="\e[97m"          # white
+COLOR_OFF="\e[39m"      # Clean the color, return to default
 
 
 # FUNCTIONS
-function prompt_error_code
+function prompt_idle
 {
-	local ERROR=$?
-	
-	if [ $ERROR == 0 ]
+	local exitCode=$?
+
+	if [ $exitCode == 0 ]
 	then
-		echo "$GREEN(OK)"
+        echo -e "\e[92;1m|\e[39;0m"
 	else
-		if [ $ERROR == 130 ]
-		then
-			echo "$RED\($ERROR : STOP by user)"
-		else
-			echo "$RED\($ERROR)"
-		fi
+        echo -e "\e[31;1m|\e[39;0m"
 	fi
 }
 
@@ -52,55 +63,68 @@ function prompt_git_branch
 }
 
 
-function ls_custom
-{
-	lsOut=`ls -GFlah`
-	
-	for item in $lsOut
-	do
-		echo "a"
-		#grepOut=`$item | grep ^.`
-		
-		#if [ $grepOut != "" ]
-		#then
-		#	echo -e "\e[37m$item"
-		#else
-		#	echo $item
-		#fi
-	done
-}
+# function ls_custom
+# {
+# 	lsOut=`ls -GFlah`
+#
+# 	for item in $lsOut
+# 	do
+# 		grepOut=`$item | grep ^.`
+#
+# 		if [ "$grepOut" != "" ]
+# 		then
+# 			echo -e "\e[37m$item"
+# 		else
+# 			echo $item
+# 		fi
+# 	done
+# }
 
 
 function cp_to_desktop
 {
-	if [ $# != 0 ] && [ $1 != "" ] && [ -f $1 ]
+	if [ "$#" != 0 ] && [ "$1" != "" ] && [ -f $1 ]
 	then
-		$file2copy=$1
+		file2copy=$1
+		cp $file2copy /mnt/c/Users/Julien/Desktop/
 	else
-		echo "\[\033[0;31m\]Aucun arguments ! Il me faut le fichier à copier !\[\033[0m\]"
-		exit 1
+		echo -e $RED"Aucun arguments ! Il me faut le fichier à copier !$COLOR_OFF"
 	fi
+}
 
-	# Récupérer le chemin où l'utilisateur veux qu'on copie
-	# si c'est égal à d le chemin doit être /mnt/c/Users/Julien/Desktop
 
-	exit 0
+function prompt_error
+{
+    local exitCode=$?
+    local prevCmd=$(history | tail -1 | cut -c8-)
+
+    if [ $exitCode = 0 ]
+    then
+        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $GREEN$exitCode$COLOR_OFF"
+    else
+        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF"
+    fi
 }
 
 # PATH
 #export PATH=/chemin:$PATH
 
 # ALIAS
-alias lsc='$(ls_custom)'
+ ## CMD
+#alias lsc='ls_custom'
+alias cpd='cp_to_desktop'
+alias where='pwd'
+alias why='prompt_error'
 
  ## CD
 alias cdy='cd /mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/'
 alias cdw='cd /mnt/c/Users/Julien/'
 
+
 # TERMINAL THEME
 export CLICOLOR=1
 export LSCOLORS=XXXCXXXXBXX
 
-#PS1
-export PS1="$(prompt_error_code) $CYAN\\u $GREEN\\W$YELLOW\$(prompt_git_branch)$COLOR_OFF\$ "
 
+# PS1
+export PS1="\$(prompt_idle)$BLUE\\u $GREEN\\W$YELLOW\$(prompt_git_branch) $COLOR_OFF\$ "

@@ -35,9 +35,9 @@ function prompt_idle
 
 	if [ $exitCode == 0 ]
 	then
-        echo -e "\e[92;1m|\e[39;0m"
+        	echo -e "\e[92;1m|\e[39;0m"
 	else
-        echo -e "\e[31;1m|\e[39;0m"
+        	echo -e "\e[31;1m|\e[39;0m"
 	fi
 }
 
@@ -83,12 +83,56 @@ function prompt_git_branch
 
 function cp_to_desktop
 {
-	if [ "$#" != 0 ] && [ "$1" != "" ] && [ -f $1 ]
+	Destination="$1"
+
+
+	if [ "$#" != 2 ]
 	then
-		file2copy=$1
-		cp $file2copy /mnt/c/Users/Julien/Desktop/
+		echo -e $RED"Aucun arguments ! Il me faut le chemin à copier !"$COLOR_OFF
+		return 1
+	elif [ "$#" != 2 ] && [ "$2" = "" ]
+	then
+		echo -e $RED"Arguments Invalide ! Il ne peux être vide, il me faut le chemin à copier !"$COLOR_OFF
+		return 2
+	elif [ ! -f "$2" ] && [ ! -d "$2" ]
+	then
+		echo -e $RED"Arguments Invalide ! Il me faut chemin vers un fichier ou un dossier !"$COLOR_OFF
+		return 3
 	else
-		echo -e $RED"Aucun arguments ! Il me faut le fichier à copier !$COLOR_OFF"
+		linkOfFileToCopy=`realpath "$2"`
+		fileName=`echo "$linkOfFileToCopy" | sed "s/.*\///"`
+	fi
+
+
+	if [ -f $linkOfFileToCopy ]
+	then
+		echo -e "Copie de $INVERTED$fileName$RESET en cours..."
+
+		cp "$linkOfFileToCopy" $Destination
+
+		local exitCode=$?
+
+		if [ $exitCode = 0 ]
+		then
+			echo -e $GREEN"Fichier copié avec succès ! 😊👍"$COLOR_OFF
+		else
+			echo -e $RED"Il y a eu un soucis au moment de la copie...\n""Erreur $?"$COLOR_OFF
+		fi
+
+	elif [ -d $linkOfFileToCopy ]
+	then
+		echo -e "Copie de $INVERTED$fileName$RESET en cours..."
+
+		cp -R "$linkOfFileToCopy" $Destination
+
+		local exitCode=$?
+
+		if [ $exitCode = 0 ]
+		then
+			echo -e $GREEN"Dossier copié avec succès ! 😊👍"$COLOR_OFF
+		else
+			echo -e $RED"Il y a eu un soucis au moment de la copie...\n""Erreur $?"$COLOR_OFF
+		fi
 	fi
 }
 
@@ -96,7 +140,7 @@ function cp_to_desktop
 function prompt_error
 {
     local exitCode=$?
-    local prevCmd=$(history | tail -1 | cut -c8-)
+    local prevCmd=$(history | tail -2 | cut -c8- | head -1)
 
     if [ $exitCode = 0 ]
     then
@@ -112,12 +156,14 @@ function prompt_error
 # ALIAS
  ## CMD
 #alias lsc='ls_custom'
-alias cpd='cp_to_desktop'
+alias cpd='cp_to_desktop "/mnt/c/Users/Julien/Desktop/"'
+alias cps='cp_to_desktop "/mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/Scripting"'
 alias where='pwd'
 alias why='prompt_error'
 
  ## CD
 alias cdy='cd /mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/'
+alias cdd='cd /mnt/c/Users/Julien/Desktop/'
 alias cdw='cd /mnt/c/Users/Julien/'
 
 

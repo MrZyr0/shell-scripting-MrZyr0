@@ -1,2 +1,4 @@
 /fixtures
 /bazar
+*.bak
+ultimateCleaner.sh.bak

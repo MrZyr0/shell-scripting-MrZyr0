@@ -319,7 +319,7 @@ function prompt_error
     else
 	if [ $exitCode = 130 ]
 	then
-		echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF \2;4marrêté par l'utilisateur$RESET 😱😡😭"
+		echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF \0033[2;4marrêté par l'utilisateur$RESET 😱😡😭"
         else
 		echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF 😱😡😭"
 	fi

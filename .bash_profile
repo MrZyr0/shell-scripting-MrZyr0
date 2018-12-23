@@ -357,4 +357,4 @@ export LSCOLORS=XXXCXXXXBXX
 
 
 # PS1
-export PS1="\$(echo "_")\$(clear)\$(prompt_idle)\e[94m\u \e[92m\W\e[33m\$(prompt_git_branch) \e[39m\$ "
+export PS1="\n\e[m\$(prompt_idle)\e[94m\u \e[92m\W\e[33m\$(prompt_git_branch) \e[39m\$ "

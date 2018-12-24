@@ -19,7 +19,7 @@ echo -e "\n"
 echo -e $YELLOW"[0] Récupération des paramètres..."$COLOR_OFF
 if [ "$#" != 0 ] && [ "$1" != "" ] && [ -d "$1" ]
 then
-	WORKING_DIR=`$1`
+	WORKING_DIR=$1
 else
     echo -e $RED"Aucun arguments ! Il me faut le chemin du dossier à trier"$COLOR_OFF
     exit 1

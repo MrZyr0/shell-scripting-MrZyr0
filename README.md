@@ -24,20 +24,20 @@ cd ~ && rm .bash_profile && exit
 ```
 
 ## Nouvelles commandes ! (alias)
-- `where` permet d'afficher le chemin absolu du répertoire courant
+- `where` permet d'afficher le chemin absolu du répertoire courant  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/where.png)
-- `why` permet d'avoir le code erreur de la commande précédante (avec une description si l'erreur est connu)
+- `why` permet d'avoir le code erreur de la commande précédante (avec une description si l'erreur est connu)  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/why.png)
-- `cx *un fichier à rendre executable*` permet de rapidement rendre executable un fichier
+- `cx *un fichier à rendre executable*` permet de rapidement rendre executable un fichier  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/cx.png)
 - `cls`, `cc` sont des raccourcis au `clear`
 ### ls
-- `lsc` permet d'afficher une colorisation pour `ls -AF`
+- `lsc` permet d'afficher une colorisation pour `ls -AF`  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/lsc.png)
-- `lsf` permet d'afficher une colorisation pour `ls -lAFh`
+- `lsf` permet d'afficher une colorisation pour `ls -lAFh`  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/lsf.png)
 
-Code couleur :
+Code couleur :  
 ![capture d'écran](https://raw.githubusercontent.com/tentacode-classroom/shell-scripting-MrZyr0/master/screens/lsCodeCouleur.PNG)
 
 # ultimateCleaner.sh

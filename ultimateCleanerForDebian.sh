@@ -77,8 +77,6 @@ do
         ((IMG++))
 
             cp "$FILE" "$CLEAN_DIR/Photos"
-    fi
-
 
     elif file "$FILE" | grep -q 'ISO Media'  # Videos
     then

@@ -30,14 +30,14 @@ cd ~ && rm .bash_profile && exit
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/why.png)
 - `cx *un fichier à rendre executable*` permet de rapidement rendre executable un fichier  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/cx.png)
-- `cls`, `cc` sont des raccourcis au `clear`
+- `cls` et `cc` sont des raccourcis au `clear`
 ### ls
 - `lsc` permet d'afficher une colorisation pour `ls -AF`  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/lsc.png)
 - `lsf` permet d'afficher une colorisation pour `ls -lAFh`  
 ![capture d'écran](https://github.com/tentacode-classroom/shell-scripting-MrZyr0/blob/master/screens/lsf.png)
 
-Code couleur :  
+#### Code couleur :  
 ![capture d'écran](https://raw.githubusercontent.com/tentacode-classroom/shell-scripting-MrZyr0/master/screens/lsCodeCouleur.PNG)
 
 # ultimateCleaner.sh

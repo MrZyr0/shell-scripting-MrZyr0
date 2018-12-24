@@ -3,13 +3,24 @@
 # .bash_profile
 Beaucoup de personnalisation sur le PS1 mais surtout beaucoup d'ajout d'alias de commandes !
 
-- Pour télécharger et appliquer (une sauvegarde du bash_profile actuelle est faite !):
+### Si tu as déjà un bash_profile
+- Pour télécharger et appliquer (une sauvegarde du bash_profile actuelle est faite !) :
 ```bash
 cd ~ && mv .bash_profile .bash_profile.bak && wget https://raw.githubusercontent.com/tentacode-classroom/shell-scripting-MrZyr0/master/.bash_profile -O .bash_profile && source .bash_profile
 ```
 - Pour supprimer le bash_profile :
 ```bash
-cd ~ && rm .bash_profile && mv .bash_profile.bak .bash_profile
+cd ~ && rm .bash_profile && mv .bash_profile.bak .bash_profile && source .bash_profile
+```
+
+### Si tu n'as pas bash_profile
+- Pour télécharger et appliquer (une sauvegarde du bash_profile actuelle est faite !) :
+```bash
+cd ~ wget https://raw.githubusercontent.com/tentacode-classroom/shell-scripting-MrZyr0/master/.bash_profile -O .bash_profile && source .bash_profile
+```
+- Pour supprimer le bash_profile (il faudra relancer le terminal) :
+```bash
+cd ~ && rm .bash_profile && exit
 ```
 
 ## Nouvelles commandes ! (alias)

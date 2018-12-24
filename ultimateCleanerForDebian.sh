@@ -76,28 +76,8 @@ do
     then
         ((IMG++))
 
-        echo "$FILE"
-
-        YEAR=`stat -t %Y "$FILE" | cut -d ' ' -f 9 | sed s/\"//g`
-
-        if [ ! -d "$CLEAN_DIR/Photos/$YEAR" ] && [ "$YEAR" != 1 ]
-        then
-            mkdir "$CLEAN_DIR/Photos/$YEAR" &> /dev/null
-        fi
-
-        MONTH=`stat -t %m "$FILE" | cut -d ' ' -f 9 | sed s/\"//g`
-
-        if [ ! -d "$CLEAN_DIR/Photos/$YEAR/$MONTH" ] && [ "$YEAR" != 1 ]
-        then
-            mkdir "$CLEAN_DIR/Photos/$YEARS/$MONTH" &> /dev/null
-        fi
-
-        if [ "$YEAR" != "" ] && [ "$MONTH" != "" ] && [ "$YEAR" != 1 ] && [ "$MONTH" != 1 ]
-        then
-            cp "$FILE" "$CLEAN_DIR/Photos/$YEAR/$MONTH"
-        else
-            cp "$FILE" "$CLEAN_DIR/Photos/sans dates"
-        fi
+            cp "$FILE" "$CLEAN_DIR/Photos"
+    fi
 
 
     elif file "$FILE" | grep -q 'ISO Media'  # Videos

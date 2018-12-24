@@ -19,13 +19,13 @@ echo -e "\n"
 echo -e $YELLOW"[0] Récupération des paramètres..."$COLOR_OFF
 if [ "$#" != 0 ] && [ "$1" != "" ] && [ -d "$1" ]
 then
-	WORKING_DIR=`realpath"$1"`
+	WORKING_DIR=`$1`
 else
     echo -e $RED"Aucun arguments ! Il me faut le chemin du dossier à trier"$COLOR_OFF
     exit 1
 fi
 
-CLEAN_DIR="$WORKING_DIR/../CLEAN"
+CLEAN_DIR="$WORKING_DIR/CLEAN"
 
 
 echo -e $YELLOW"[1] Création des dossiers de destination..."$COLOR_OFF
@@ -76,7 +76,6 @@ do
     then
         ((IMG++))
 
-        echo "$FILE"
 
         YEAR=`stat -t %Y "$FILE" | cut -d ' ' -f 9 | sed s/\"//g`
 

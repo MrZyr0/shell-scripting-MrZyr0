@@ -153,22 +153,22 @@ function ls_custom
 			then
 				thisFile=`echo "$fileName" | sed "s/*$//" | sed "s/^.//"`
 				echo -ne "\0033[92;48;5;243m$thisFile\0033[39;0m\t"
-			
+
 			elif [ -f "$fileName" ] && [ -x "$fileName" ]  # Executable file (folder are executable to work)
 			then
 				thisFile=`echo "$fileName" | sed "s/*$//"`
 				echo -ne "$GREEN$thisFile$COLOR_OFF\t"
-			
+
 			elif [ -f "$fileName" ] && [ "$isHidden" != "" ] && [ "$isEmpty" = "" ] # Hidden file
 			then
 				thisFile=`echo "$fileName" | sed "s/^.//"`
 				echo -ne "$GREY$thisFile$COLOR_OFF\t"
-			
+
 			elif [ -d "$fileName" ] && [ "$isHidden" != "" ] # Hidden folder
 			then
 				thisFile=`echo "$fileName" | sed "s/^.//" | sed "s/\/$//"`
 				echo -ne "\0033[90;48;5;253m$thisFile\0033[39;0m\t"
-			
+
 			elif [ -f "$fileName" ] && [ "$isHidden" = "" ] && [ ! -x "$fileName" ] && [ "$isEmpty" = "" ] # Standard file
 			then
 				echo -ne "$fileName\t"
@@ -181,7 +181,7 @@ function ls_custom
 			elif [ "$isEmpty" != "" ] # Empty file
 			then
 				echo -ne "$RED$fileName$COLOR_OFF\t"
-			
+
 			elif [ -z "$(ls -A "$fileName")" ] # Empty folder
 			then
 				thisFile=`echo "$fileName" | sed "s/\/$//"`
@@ -192,7 +192,7 @@ function ls_custom
 			fi
 
 
-			size=`echo $fileName | wc -m` 
+			size=`echo $fileName | wc -m`
 			if [ "$size" > "6" ]
 			then
 				echo -ne "\t"
@@ -210,7 +210,7 @@ function ls_custom
 }
 
 
-function cp_to_desktop
+function quick_cp
 {
 	Destination="$1"
 
@@ -237,7 +237,7 @@ function cp_to_desktop
 	then
 		echo -ne "Le fichier $INVERTED$fileName$RESET existe déjà, voulez-vous continuer ? [O/n] "
 		read choice
-		
+
 
 
 		while [ "$choice" != "" ] && [ "$choice" != "n" ] && [ "$choice" != "N" ] && [ "$choice" != "O" ] && [ "$choice" != "o" ]
@@ -252,7 +252,7 @@ function cp_to_desktop
 			echo -e $RED"Action annulée"$COLOR_OFF
 			return 4
 		fi
-		
+
 		rm "$Destination/$fileName"
 
 	elif [ -d "$linkOfFileToCopy" ] && [ -d "$Destination/$fileName" ]
@@ -278,7 +278,7 @@ function cp_to_desktop
 	if [ -f "$linkOfFileToCopy" ]
 	then
 		echo -e "Copie de $INVERTED$fileName$RESET en cours..."
-		
+
 		cp "$linkOfFileToCopy" "$Destination"
 
 		local exitCode=$?
@@ -315,13 +315,13 @@ function prompt_error
 
     if [ $exitCode = 0 ]
     then
-        echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $GREEN$exitCode$COLOR_OFF 😁👍"
+        echo -e $CYAN"$prevCmd$COLOR_OFF à retourné $GREEN$exitCode$COLOR_OFF 😁👍"
     else
 	if [ $exitCode = 130 ]
 	then
-		echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF \0033[2;4marrêté par l'utilisateur$RESET 😱😡😭"
+		echo -e $CYAN"$prevCmd$COLOR_OFF à retourné $RED$exitCode$COLOR_OFF \0033[2;4marrêté par l'utilisateur$RESET 😱😡😭"
         else
-		echo -e $CYAN"$prevCmd $COLOR_OFFà retourné $RED$exitCode$COLOR_OFF 😱😡😭"
+		echo -e $CYAN"$prevCmd$COLOR_OFF à retourné $RED$exitCode$COLOR_OFF 😱😡😭"
 	fi
     fi
 }
@@ -333,9 +333,9 @@ function prompt_error
  ## CMD
 alias lsf='ls_custom_full'
 alias lsc='ls_custom'
-alias cpd='cp_to_desktop "/mnt/c/Users/Julien/Desktop/"'
-alias cpc='cp_to_desktop "/mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/"'
-alias cps='cp_to_desktop "/mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/Scripting"'
+alias cpd='quick_cp "/mnt/c/Users/Julien/Desktop/"'
+alias cpc='quick_cp "/mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/"'
+alias cps='quick_cp "/mnt/c/Users/Julien/OneDrive\ -\ Ynov/Cours/B2/Scripting"'
 alias where='pwd'
 alias why='prompt_error'
 alias cls='clear'
@@ -352,8 +352,8 @@ alias cdw='cd /mnt/c/Users/Julien/'
 # TERMINAL THEME
 export CLICOLOR=1
 
-# ls COLOR (utilisé pour ls --color=auto)
-export LSCOLORS=XXXCXXXXBXX
+# ls COLOR (utilisé pour ls --color=auto) Incompatible avec MacOS et presque inutile sur debian du coup avec lsc et lsf
+# export LSCOLORS=XXXCXXXXBXX
 
 
 # PS1
